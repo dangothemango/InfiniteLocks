@@ -1,5 +1,7 @@
 package com.dangorman.infinitelocks;
 
+import com.dangorman.infinitelocks.health.TemplateHealthcheck;
+import com.dangorman.infinitelocks.resources.HelloWorldResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -23,7 +25,15 @@ public class InfiniteLocksApplication extends Application<InfiniteLocksConfigura
     @Override
     public void run(final InfiniteLocksConfiguration configuration,
                     final Environment environment) {
-        // TODO: implement application
+        final HelloWorldResource resource = new HelloWorldResource(
+                configuration.getTemplate(),
+                configuration.getDefaultName()
+        );
+        final TemplateHealthcheck healthCheck =
+                new TemplateHealthcheck(configuration.getTemplate());
+        environment.healthChecks().register("template", healthCheck);
+        environment.jersey().register(resource);
     }
-
 }
+
+
