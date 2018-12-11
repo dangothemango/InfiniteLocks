@@ -29,6 +29,7 @@ public class InfiniteLocksApplication extends Application<InfiniteLocksConfigura
                 configuration.getTemplate(),
                 configuration.getDefaultName()
         );
+
         final TemplateHealthcheck healthCheck =
                 new TemplateHealthcheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);

@@ -1,2 +1,1 @@
-web    java $JAVA_OPTS -Ddw.http.port=$PORT -Ddw.http.adminPort=$PORT -jar target/infinite-locks-1.0-SNAPSHOT.jar server config/dev.yml
-
+web: java $JAVA_OPTS -jar target/infinite-locks-1.0-SNAPSHOT.jar db migrate config/dev.yml && java $JAVA_OPTS -Ddw.server.connector.port=$PORT -jar target/dropwizard-example-0.7.0.jar server example.yml
