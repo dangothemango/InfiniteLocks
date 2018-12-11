@@ -13,12 +13,12 @@ defaultName: Stranger
 # use the simple server factory if you only want to run on a single port
 # HEROKU NOTE - the port gets be overridden with the Heroku $PORT in the Procfile
 server:
- type: simple
+ type: default
  applicationContextPath: /
  #adminContextPath: /admin # If you plan to use an admin path, you'll need to also use non-root app path
- connector:
-   type: http
-   port: 8080
+ applicationConnectors:
+   - type: http
+     port: 8080
 
 # HEROKU NOTE - Heroku only opens a single port so can't use the usual Dropwizard app-and-admin configuration
 #server:
