@@ -1,7 +1,2 @@
-logging:
-  level: INFO
-  loggers:
-    com.dangorman.infinitelocks: DEBUG
-
 template: Hello, %s!
 defaultName: Stranger
