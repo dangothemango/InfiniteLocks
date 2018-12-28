@@ -1,5 +1,6 @@
 package com.dangorman.infinitelocks;
 
+import com.dangorman.infinitelocks.db.DatabaseModule;
 import com.dangorman.infinitelocks.health.TemplateHealthcheck;
 import com.dangorman.infinitelocks.resources.DevelopmentResource;
 import com.dangorman.infinitelocks.resources.HelloWorldResource;
@@ -31,6 +32,7 @@ public class InfiniteLocksApplication extends Application<InfiniteLocksConfigura
                 configuration.getDatabaseUrl()
         );
 
+        DatabaseModule.setDbUrl(configuration.getDatabaseUrl());
         final TemplateHealthcheck healthCheck =
                 new TemplateHealthcheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);

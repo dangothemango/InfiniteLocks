@@ -2,6 +2,7 @@ package com.dangorman.infinitelocks.resources;
 
 import com.dangorman.infinitelocks.db.DatabaseModule;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jline.internal.Log;
 
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,6 +29,7 @@ public class DevelopmentResource {
         if (!query.auth.equals("dangomango")){
             throw new HTTPException(401);
         }
+        Log.info(query.query);
         try {
             DatabaseModule.getDbConnection().execute(query.query);
             return "successful";
