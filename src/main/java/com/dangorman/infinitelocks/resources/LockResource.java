@@ -17,7 +17,7 @@ public class LockResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getLock(@QueryParam("lock") String lock) {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("./resources/assets/Puzzles/Colors.html");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Puzzles/Colors.html");
 
         return template.render(new JtwigModel());
     }
