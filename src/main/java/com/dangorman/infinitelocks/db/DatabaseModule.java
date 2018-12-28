@@ -31,8 +31,10 @@ public final class DatabaseModule {
             return dbConnection;
         } catch (URISyntaxException e) {
             System.out.println(e.getMessage());
+            System.exit(1);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            System.exit(1);
         }
         return null;
     }
