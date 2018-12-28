@@ -30,9 +30,9 @@ public final class DatabaseModule {
             System.out.println(DatabaseModule.getDbConnection() == null ? "itsnull": "its not");
             return dbConnection;
         } catch (URISyntaxException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         } catch (SQLException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
         return null;
     }
