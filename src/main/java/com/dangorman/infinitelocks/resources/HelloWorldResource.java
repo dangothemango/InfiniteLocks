@@ -29,7 +29,7 @@ public class HelloWorldResource {
     public Saying sayHello(@QueryParam("name") Optional<String> name) {
         String n;
         try{
-            n = (String)DatabaseModule.getDbConnection().rows("Select Top 1 name from names where active = 1").get(0).get("name");
+            n = (String)DatabaseModule.getDbConnection().rows("Select name from names where active = 1 limit 1").get(0).get("name");
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             n = e.getMessage();
