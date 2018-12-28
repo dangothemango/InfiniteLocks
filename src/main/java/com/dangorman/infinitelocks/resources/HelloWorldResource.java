@@ -3,7 +3,7 @@ package com.dangorman.infinitelocks.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.dangorman.infinitelocks.api.Saying;
 import com.dangorman.infinitelocks.db.DatabaseModule;
-import jline.internal.Log;
+import groovy.util.logging.Slf4j;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -31,10 +31,10 @@ public class HelloWorldResource {
         try{
             n = (String)DatabaseModule.getDbConnection().rows("Select Top 1 name from names where active = 1").get(0).get("name");
         } catch (SQLException e) {
-            Log.error(e.getMessage());
+            System.err.println(e.getMessage());
             n = e.getMessage();
         } catch (Exception e){
-            Log.error(e.getMessage());
+            System.err.println(e.getMessage());
             n = e.getMessage();
         }
         final String value = String.format(template, n);
