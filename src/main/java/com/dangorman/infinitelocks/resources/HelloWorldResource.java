@@ -3,7 +3,6 @@ package com.dangorman.infinitelocks.resources;
 import com.codahale.metrics.annotation.Timed;
 import com.dangorman.infinitelocks.api.Saying;
 import com.dangorman.infinitelocks.db.DatabaseModule;
-import groovy.util.logging.Slf4j;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
