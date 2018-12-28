@@ -23,16 +23,13 @@ public final class DatabaseModule {
             URI uri = new URI(herokuUrl);
             username = uri.getUserInfo().split(":")[0];
             password = uri.getUserInfo().split(":")[1];
-            connectionString = "jdbc:postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath()
-                    + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
-            dbConnection = Sql.newInstance(connectionString, username, password);
+            connectionString = "jdbc:postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath();
+                  //  + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+            dbConnection = Sql.newInstance(connectionString, username, password,"org.postgresql.Driver");
             dbConnection.execute("Select 1");
             System.out.println(DatabaseModule.getDbConnection() == null ? "itsnull": "its not");
             return dbConnection;
-        } catch (URISyntaxException e) {
-            System.out.println(e.getMessage());
-            System.exit(1);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.exit(1);
         }
