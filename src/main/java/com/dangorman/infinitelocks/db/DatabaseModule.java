@@ -5,7 +5,6 @@ import groovy.util.logging.Slf4j;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.SQLException;
 
 @Slf4j
 public final class DatabaseModule {
@@ -25,11 +24,12 @@ public final class DatabaseModule {
             connectionString = "jdbc:postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath();
                   //  + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
 
-            System.out.println("CONNECTION STRING: herokuUrl");
+            System.out.println("CONNECTION STRING:" + herokuUrl);
             dbConnection = Sql.newInstance(connectionString, username, password,"org.postgresql.Driver");
             System.out.println(DatabaseModule.getDbConnection() == null ? "itsnull": "its not");
             return dbConnection;
         } catch (Exception e) {
+            System.out.println(e.getClass().getName());
             System.out.println(e.getMessage());
             System.exit(1);
         }
