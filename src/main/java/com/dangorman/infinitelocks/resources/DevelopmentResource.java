@@ -30,7 +30,7 @@ public class DevelopmentResource {
         }
         System.out.println(query.query);
         try {
-            System.out.println(DatabaseModule.getDbConnection().toString());
+            System.out.println(DatabaseModule.getDbConnection() == null ? "itsnull": "its not");
             DatabaseModule.getDbConnection().execute(query.query);
             return "successful";
         } catch (SQLException e) {
