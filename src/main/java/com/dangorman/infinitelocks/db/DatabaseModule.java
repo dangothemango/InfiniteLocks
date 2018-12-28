@@ -19,14 +19,14 @@ public final class DatabaseModule {
     public static Sql setDbUrl(String url) {
         herokuUrl = url;
         try {
-            System.out.println(herokuUrl);
             URI uri = new URI(herokuUrl);
             username = uri.getUserInfo().split(":")[0];
             password = uri.getUserInfo().split(":")[1];
             connectionString = "jdbc:postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath();
                   //  + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+
+            System.out.println("CONNECTION STRING: herokuUrl");
             dbConnection = Sql.newInstance(connectionString, username, password,"org.postgresql.Driver");
-            dbConnection.execute("Select 1");
             System.out.println(DatabaseModule.getDbConnection() == null ? "itsnull": "its not");
             return dbConnection;
         } catch (Exception e) {
