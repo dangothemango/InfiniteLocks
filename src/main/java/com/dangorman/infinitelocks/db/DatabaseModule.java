@@ -26,6 +26,7 @@ public final class DatabaseModule {
             connectionString = "jdbc:postgresql://" + uri.getHost() + ':' + uri.getPort() + uri.getPath()
                     + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
             dbConnection = Sql.newInstance(connectionString, username, password);
+            dbConnection.execute("Select 1");
             return dbConnection;
         } catch (URISyntaxException e) {
             Log.error(e.getMessage());
