@@ -19,6 +19,7 @@ public final class DatabaseModule {
     public static Sql setDbUrl(String url) {
         herokuUrl = url;
         try {
+            System.out.println(herokuUrl);
             URI uri = new URI(herokuUrl);
             username = uri.getUserInfo().split(":")[0];
             password = uri.getUserInfo().split(":")[1];
