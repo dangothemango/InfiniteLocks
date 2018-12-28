@@ -24,7 +24,7 @@ public class LockResource {
             throw new HTTPException(401);
         }
         try {
-            lockLocation = (String)DatabaseModule.getDbConnection().rows(String.format("Select location from locks where name = '%s' limit 1")).get(0).get("location");
+            lockLocation = (String)DatabaseModule.getDbConnection().rows(String.format("Select location from locks where name = '%s' limit 1",lock)).get(0).get("location");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             //TODO make all 404s better ---idea Secret locks
