@@ -2,7 +2,6 @@ package com.dangorman.infinitelocks.db;
 
 import groovy.sql.Sql;
 import groovy.util.logging.Slf4j;
-import jline.internal.Log;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -27,11 +26,12 @@ public final class DatabaseModule {
                     + "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
             dbConnection = Sql.newInstance(connectionString, username, password);
             dbConnection.execute("Select 1");
+            System.out.println(DatabaseModule.getDbConnection() == null ? "itsnull": "its not");
             return dbConnection;
         } catch (URISyntaxException e) {
-            Log.error(e.getMessage());
+            System.err.println(e.getMessage());
         } catch (SQLException e) {
-            Log.error(e.getMessage());
+            System.err.println(e.getMessage());
         }
         return null;
     }
