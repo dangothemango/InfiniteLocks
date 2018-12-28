@@ -27,7 +27,7 @@ public class InfiniteLocksApplication extends Application<InfiniteLocksConfigura
                     final Environment environment) {
         final HelloWorldResource resource = new HelloWorldResource(
                 configuration.getTemplate(),
-                configuration.getDefaultName()
+                configuration.getDatabaseUrl()
         );
 
         final TemplateHealthcheck healthCheck =

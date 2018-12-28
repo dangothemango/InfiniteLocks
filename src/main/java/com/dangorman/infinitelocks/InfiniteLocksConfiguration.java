@@ -5,6 +5,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class InfiniteLocksConfiguration extends Configuration {
+
+    public String getDatabaseUrl() {
+        return databaseUrl;
+    }
+
+    public void setDatabaseUrl(String databaseUrl) {
+        this.databaseUrl = databaseUrl;
+    }
+
+    @NotEmpty
+    private String databaseUrl;
+
     @NotEmpty
     private String template;
 

@@ -4,11 +4,7 @@ defaultName: Stranger
 
 ## Database settings.
 ## HEROKU NOTE - none of these are used since the values come from the Heroku $DATABASE_URL
-#database:
-#  driverClass: org.postgresql.Driver
-#  user: unused-user
-#  password: unused-pw
-#  url: unused-url
+databaseUrl: default
 
 # use the simple server factory if you only want to run on a single port
 # HEROKU NOTE - the port gets be overridden with the Heroku $PORT in the Procfile
@@ -57,7 +53,7 @@ logging:
   loggers:
 
     # Sets the level for 'com.example.app' to DEBUG.
-    com.example.app: DEBUG
+    com.dangorman.infinite-locks: DEBUG
 
     org.hibernate.SQL: ALL
 
