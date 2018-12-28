@@ -5,6 +5,7 @@ import groovy.util.logging.Slf4j;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 
 @Slf4j
 public final class DatabaseModule {
