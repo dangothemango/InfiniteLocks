@@ -1,8 +1,8 @@
 {% extends "../layout.html" %}
 {% block content %}
 
-<form>
-    <input action="/unlock" method="POST" type="text" name="key">
+<form id="unlockForm" action="/unlock" method="POST">
+    <input type="text" name="key" id="keyInput">
 
     <button type ="Submit" name ="submit">Unlock</button>
 </form>
@@ -10,5 +10,41 @@
 <br/>
 
 {% block puzzle %} {% endblock %}
+
+<script type="text/javascript">
+
+    $('#unlockForm').submit(function(e){
+        e.preventDefault();
+
+        var json = {};
+
+        json["lock"] = {{ lockName }};
+        json["key"] = $("#keyInput").value;
+
+        $.ajax({
+            url: "/lock/unlock",
+            type: "POST",
+            data: JSON.stringify(json),
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+                var response = $.parseJSON(data);
+                console.log(response);
+                if (response.result.toUpperCase() === "SUCCESS") {
+                    console.log("Success")
+                } else {
+                    alert("This key doesnt fit")
+                }
+            },
+            error: function (data) {
+                alert(data.responseText)
+            }
+        });
+
+        return false; // return false to prevent typical submit behavior
+
+    });
+
+</script>
 
 {% endblock %}

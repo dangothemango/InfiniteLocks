@@ -11,6 +11,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.xml.ws.http.HTTPException;
 import java.sql.SQLException;
+import com.google.gson.JsonObject;
 
 
 @Path("/lock")
@@ -37,10 +38,25 @@ public class LockResource {
     }
 
     @Path("/unlock")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public String unlock(@QueryParam("lock") String lock, @QueryParam("key") String key){
-
-        return "yes";
+        String allSollutions;
+        JsonObject json = new JsonObject();
+        json.addProperty( "result","failure");
+        try{
+            allSollutions = (String)DatabaseModule.getDbConnection().rows(
+                    String.format("Select location from locks where name = '%s' limit 1",lock)
+                        ).get(0).get("solutions");
+            String[] solutionsList = allSollutions.split(",");
+            for (String s: solutionsList) {
+                if (s.toUpperCase() == key.trim().toUpperCase()){
+                    //TODO: do all the usery things
+                    json.addProperty("result","success");
+                }
+            }
+        } catch (SQLException e){
+        }
+        return json.toString();
     }
 
 }
