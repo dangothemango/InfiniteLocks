@@ -4,10 +4,7 @@ import com.dangorman.infinitelocks.db.DatabaseModule;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.xml.ws.http.HTTPException;
 import java.sql.SQLException;
@@ -38,6 +35,7 @@ public class LockResource {
     }
 
     @Path("/unlock")
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public String unlock(@QueryParam("lock") String lock, @QueryParam("key") String key){
         if (lock.contains(";")){
