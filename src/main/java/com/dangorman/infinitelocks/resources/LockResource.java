@@ -36,4 +36,11 @@ public class LockResource {
         return template.render(new JtwigModel());
     }
 
+    @Path("/unlock")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String unlock(@QueryParam("lock") String lock, @QueryParam("key") String key){
+
+        return "yes";
+    }
+
 }
