@@ -43,8 +43,7 @@ public class LockResource {
             throw new HTTPException(401);
         }
         String allSollutions;
-        JsonObject json = new JsonObject();
-        json.addProperty( "result","failure");
+        String result = "failure";
         System.out.println(unlockAttempt.getLock()+':'+unlockAttempt.getKey());
         try{
             allSollutions = (String)DatabaseModule.getDbConnection().rows(
@@ -55,11 +54,13 @@ public class LockResource {
             for (String s: solutionsList) {
                 if (s.toUpperCase() == unlockAttempt.getKey().trim().toUpperCase()){
                     //TODO: do all the usery things
-                    json.addProperty("result","success");
+                    result = "success";
                 }
             }
         } catch (SQLException e){
         }
+        JsonObject json = new JsonObject();
+        json.addProperty( "result",result);
         return json.toString();
     }
 
