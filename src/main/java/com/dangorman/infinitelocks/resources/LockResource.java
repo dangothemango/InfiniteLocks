@@ -1,5 +1,6 @@
 package com.dangorman.infinitelocks.resources;
 
+import com.dangorman.infinitelocks.api.UnlockAttempt;
 import com.dangorman.infinitelocks.db.DatabaseModule;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -37,8 +38,8 @@ public class LockResource {
     @Path("/unlock")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String unlock(@QueryParam("lock") String lock, @QueryParam("key") String key){
-        if (lock.contains(";")){
+    public String unlock(UnlockAttempt unlockAttempt){
+        if (unlockAttempt.getLock().contains(";")){
             throw new HTTPException(401);
         }
         String allSollutions;
@@ -46,11 +47,11 @@ public class LockResource {
         json.addProperty( "result","failure");
         try{
             allSollutions = (String)DatabaseModule.getDbConnection().rows(
-                    String.format("Select location from locks where name = '%s' limit 1",lock)
+                    String.format("Select location from locks where name = '%s' limit 1",unlockAttempt.getLock())
                         ).get(0).get("solutions");
             String[] solutionsList = allSollutions.split(",");
             for (String s: solutionsList) {
-                if (s.toUpperCase() == key.trim().toUpperCase()){
+                if (s.toUpperCase() == unlockAttempt.getKey().trim().toUpperCase()){
                     //TODO: do all the usery things
                     json.addProperty("result","success");
                 }
