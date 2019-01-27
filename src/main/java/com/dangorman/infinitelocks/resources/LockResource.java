@@ -52,7 +52,7 @@ public class LockResource {
             System.out.println(allSollutions);
             String[] solutionsList = allSollutions.split(",");
             for (String s: solutionsList) {
-                if (s.toUpperCase() == unlockAttempt.getKey().trim().toUpperCase()){
+                if (s.toUpperCase().equals(unlockAttempt.getKey().trim().toUpperCase())){
                     //TODO: do all the usery things
                     result = "success";
                 }
