@@ -29,6 +29,7 @@
             dataType: "json",
             contentType: "application/json",
             success: function (data) {
+                console.log(data);
                 var response = $.parseJSON(data);
                 console.log(response);
                 if (response.result.toUpperCase() === "SUCCESS") {
