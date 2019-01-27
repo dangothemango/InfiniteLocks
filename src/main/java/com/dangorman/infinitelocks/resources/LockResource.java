@@ -45,10 +45,12 @@ public class LockResource {
         String allSollutions;
         JsonObject json = new JsonObject();
         json.addProperty( "result","failure");
+        System.out.println(unlockAttempt.getLock()+':'+unlockAttempt.getKey());
         try{
             allSollutions = (String)DatabaseModule.getDbConnection().rows(
                     String.format("Select solutions from locks where name = '%s' limit 1",unlockAttempt.getLock())
                         ).get(0).get("solutions");
+            System.out.println(allSollutions);
             String[] solutionsList = allSollutions.split(",");
             for (String s: solutionsList) {
                 if (s.toUpperCase() == unlockAttempt.getKey().trim().toUpperCase()){
