@@ -30,9 +30,7 @@
             contentType: "application/json",
             success: function (data) {
                 console.log(data);
-                var response = $.parseJSON(data);
-                console.log(response);
-                if (response.result.toUpperCase() === "SUCCESS") {
+                if (data.result.toUpperCase() === "SUCCESS") {
                     console.log("Success")
                 } else {
                     alert("This key doesnt fit")
