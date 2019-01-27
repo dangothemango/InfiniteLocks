@@ -34,12 +34,15 @@ public class LockResource {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate(lockLocation);
 
-        return template.render(new JtwigModel());
+        return template.render(new JtwigModel().with("lockName",lock));
     }
 
     @Path("/unlock")
     @Produces(MediaType.APPLICATION_JSON)
     public String unlock(@QueryParam("lock") String lock, @QueryParam("key") String key){
+        if (lock.contains(";")){
+            throw new HTTPException(401);
+        }
         String allSollutions;
         JsonObject json = new JsonObject();
         json.addProperty( "result","failure");
