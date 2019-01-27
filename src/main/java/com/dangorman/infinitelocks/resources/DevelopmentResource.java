@@ -42,14 +42,14 @@ public class DevelopmentResource {
 
     @POST
     @Path("/query")
-    public List<GroovyRowResult> runQuery(sqlQuery query){
+    public String runQuery(sqlQuery query){
         if (!query.auth.equals("dangomango")){
             throw new HTTPException(401);
         }
         System.out.println(query.query);
         try {
             System.out.println(DatabaseModule.getDbConnection() == null ? "itsnull": "its not");
-            return DatabaseModule.getDbConnection().rows(query.query);
+            return DatabaseModule.getDbConnection().rows(query.query).toString();
         } catch (SQLException e) {
             return null;
         }
