@@ -47,7 +47,7 @@ public class LockResource {
         json.addProperty( "result","failure");
         try{
             allSollutions = (String)DatabaseModule.getDbConnection().rows(
-                    String.format("Select location from locks where name = '%s' limit 1",unlockAttempt.getLock())
+                    String.format("Select solutions from locks where name = '%s' limit 1",unlockAttempt.getLock())
                         ).get(0).get("solutions");
             String[] solutionsList = allSollutions.split(",");
             for (String s: solutionsList) {
