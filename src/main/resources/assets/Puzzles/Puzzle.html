@@ -19,7 +19,8 @@
         var json = {};
 
         json["lock"] = "{{ lockName }}";
-        json["key"] = $("#keyInput").value;
+        json["key"] = $("#keyInput").val();
+        console.log($("#keyInput").val());
 
         $.ajax({
             url: "/lock/unlock",
