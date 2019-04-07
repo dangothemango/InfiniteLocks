@@ -18,19 +18,19 @@ public class LockResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getLock(@QueryParam("lock") String lock) {
-        String lockLocation;
+        String lockHtml;
         if (lock.contains(";")){
             throw new HTTPException(401);
         }
         try {
-            lockLocation = (String)DatabaseModule.getDbConnection().rows(String.format("Select location from locks where name = '%s' limit 1",lock)).get(0).get("location");
+            lockHtml = (String)DatabaseModule.getDbConnection().rows(String.format("Select puzzle_html from locks where name = '%s' limit 1",lock)).get(0).get("location");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            //TODO make all 404s better ---idea Secret locks
+            //TODO make all 404s better --idea Secret locks
             throw new HTTPException(404);
         }
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate(lockLocation);
+        JtwigTemplate template = JtwigTemplate.inlineTemplate(lockHtml);
 
         return template.render(new JtwigModel().with("lockName",lock));
     }
@@ -42,18 +42,18 @@ public class LockResource {
         if (unlockAttempt.getLock().contains(";")){
             throw new HTTPException(401);
         }
-        String allSollutions;
+        String allSolutions;
         String result = "failure";
         System.out.println(unlockAttempt.getLock()+':'+unlockAttempt.getKey());
         try{
-            allSollutions = (String)DatabaseModule.getDbConnection().rows(
+            allSolutions = (String)DatabaseModule.getDbConnection().rows(
                     String.format("Select solutions from locks where name = '%s' limit 1",unlockAttempt.getLock())
                         ).get(0).get("solutions");
-            System.out.println(allSollutions);
-            String[] solutionsList = allSollutions.split(",");
+            System.out.println(allSolutions);
+            String[] solutionsList = allSolutions.split(",");
             for (String s: solutionsList) {
                 if (s.toUpperCase().equals(unlockAttempt.getKey().trim().toUpperCase())){
-                    //TODO: do all the usery things
+                    //TODO: do all the user things
                     result = "success";
                 }
             }

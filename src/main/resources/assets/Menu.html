@@ -1,5 +1,11 @@
 {% extends "./layout.html" %}
 {% import "./macros.html" as macros %}
 {% block content %}
-{{ macros.lock("colors")}}
+
+    {% for lock in availableLocks %}
+
+        {{ macros.lock(lock)}}
+
+    {% endfor %}
+
 {% endblock %}
