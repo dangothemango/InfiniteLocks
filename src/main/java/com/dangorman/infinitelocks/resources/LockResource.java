@@ -23,7 +23,9 @@ public class LockResource {
             throw new HTTPException(401);
         }
         try {
-            lockHtml = (String)DatabaseModule.getDbConnection().rows(String.format("Select puzzle_html from locks where name = '%s' limit 1",lock)).get(0).get("location");
+            lockHtml = (String)DatabaseModule.getDbConnection().rows(
+                        String.format("Select puzzle_html from locks where name = '%s' limit 1",lock)
+                    ).get(0).get("puzzle_html");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             //TODO make all 404s better --idea Secret locks
