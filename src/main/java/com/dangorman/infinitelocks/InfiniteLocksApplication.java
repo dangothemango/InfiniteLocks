@@ -39,7 +39,7 @@ public class InfiniteLocksApplication extends Application<InfiniteLocksConfigura
                 new TemplateHealthcheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
         environment.jersey().register(resource);
-        environment.jersey().register(new DevelopmentResource());
+        //environment.jersey().register(new DevelopmentResource());
         environment.jersey().register(new LockResource());
         environment.jersey().register(new MenuResource());
     }
