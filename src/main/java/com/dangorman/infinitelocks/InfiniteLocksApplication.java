@@ -4,6 +4,7 @@ import com.dangorman.infinitelocks.db.DatabaseModule;
 import com.dangorman.infinitelocks.health.TemplateHealthcheck;
 import com.dangorman.infinitelocks.resources.HelloWorldResource;
 import com.dangorman.infinitelocks.resources.LockResource;
+import com.dangorman.infinitelocks.resources.LoginResource;
 import com.dangorman.infinitelocks.resources.MenuResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
@@ -42,6 +43,7 @@ public class InfiniteLocksApplication extends Application<InfiniteLocksConfigura
         //environment.jersey().register(new DevelopmentResource());
         environment.jersey().register(new LockResource());
         environment.jersey().register(new MenuResource());
+        environment.jersey().register(new LoginResource());
     }
 }
 
