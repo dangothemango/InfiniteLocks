@@ -2,13 +2,13 @@ package com.dangorman.infinitelocks;
 
 import com.dangorman.infinitelocks.db.DatabaseModule;
 import com.dangorman.infinitelocks.health.TemplateHealthcheck;
-import com.dangorman.infinitelocks.resources.DevelopmentResource;
 import com.dangorman.infinitelocks.resources.HelloWorldResource;
 import com.dangorman.infinitelocks.resources.LockResource;
 import com.dangorman.infinitelocks.resources.MenuResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.eclipse.jetty.server.session.SessionHandler;
 
 public class InfiniteLocksApplication extends Application<InfiniteLocksConfiguration> {
 

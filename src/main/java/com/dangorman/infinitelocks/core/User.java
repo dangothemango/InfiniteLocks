@@ -14,7 +14,7 @@ public class User {
     public List<String> getAvailableLocks(){
         List<GroovyRowResult> puzzles;
         try {
-            puzzles = DatabaseModule.getDbConnection().rows("Select distinct name from locks");//.get(0).get("location");
+            puzzles = DatabaseModule.getDbConnection().rows("Select distinct name from locks");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             //TODO make all 404s better --idea Secret locks

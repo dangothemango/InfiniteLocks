@@ -22,7 +22,9 @@ public class MenuResource {
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Menu.html");
 
-        return template.render(new JtwigModel().with("availableLocks",locks));
+        return template.render(new JtwigModel()
+                .with("availableLocks",locks)
+        );
     }
 
 }

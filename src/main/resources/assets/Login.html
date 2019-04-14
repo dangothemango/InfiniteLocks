@@ -1,0 +1,39 @@
+{% extends "/assets/layout.html" %}
+{% import "/assets/macros.html" as macros %}
+{% block content %}
+
+<form id="loginForm" action="/" method="POST">
+    <input type="text" name="username" id="username">
+    <input type="password" name="password" id="password">
+
+    <button type ="Submit" name ="submit">Login</button>
+</form>
+<br/>
+<br/>
+
+
+<script type="text/javascript">
+
+    $('#loginForm').submit(function(e){
+        e.preventDefault();
+
+        var url = "/" + "?username=" + $("#username").val() + "&password=" + $("#password").val();
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            success: function () {
+                    alert("Success")
+            },
+            error: function (data) {
+                alert(data.responseText)
+            }
+        });
+
+        return false; // return false to prevent typical submit behavior
+
+    });
+
+</script>
+
+{% endblock %}
