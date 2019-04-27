@@ -1,11 +1,11 @@
 package com.dangorman.infinitelocks.db;
 
+import groovy.sql.GroovyRowResult;
 import groovy.sql.Sql;
 import groovy.util.logging.Slf4j;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.sql.SQLException;
+import java.util.List;
 
 @Slf4j
 public final class DatabaseModule {
@@ -27,7 +27,6 @@ public final class DatabaseModule {
 
             System.out.println("CONNECTION STRING:" + herokuUrl);
             dbConnection = Sql.newInstance(connectionString, username, password,"org.postgresql.Driver");
-            System.out.println(DatabaseModule.getDbConnection() == null ? "Could not connect to database": "successfully connected to database");
             return dbConnection;
         } catch (Exception e) {
             System.out.println(e.getClass().getName());
@@ -37,7 +36,17 @@ public final class DatabaseModule {
         return null;
     }
 
-    public static Sql getDbConnection(){
-        return dbConnection;
+    public static List<GroovyRowResult> rows(String query) throws Exception{
+        if (query.contains(";")){
+            throw new Exception("Found sql injection attempt, erring");
+        }
+        return dbConnection.rows(query);
+    }
+
+    public static boolean execute(String query) throws Exception{
+        if (query.contains(";")){
+            throw new Exception("Found sql injection attempt, erring");
+        }
+        return dbConnection.execute(query);
     }
 }

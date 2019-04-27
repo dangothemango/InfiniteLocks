@@ -2,7 +2,6 @@ package com.dangorman.infinitelocks;
 
 import com.dangorman.infinitelocks.db.DatabaseModule;
 import com.dangorman.infinitelocks.health.TemplateHealthcheck;
-import com.dangorman.infinitelocks.resources.HelloWorldResource;
 import com.dangorman.infinitelocks.resources.LockResource;
 import com.dangorman.infinitelocks.resources.LoginResource;
 import com.dangorman.infinitelocks.resources.MenuResource;
@@ -29,17 +28,16 @@ public class InfiniteLocksApplication extends Application<InfiniteLocksConfigura
     @Override
     public void run(final InfiniteLocksConfiguration configuration,
                     final Environment environment) {
-        final HelloWorldResource resource = new HelloWorldResource(
-                configuration.getTemplate(),
-                configuration.getDatabaseUrl()
-        );
+//        final HelloWorldResource resource = new HelloWorldResource(
+//                configuration.getTemplate(),
+//                configuration.getDatabaseUrl()
+//        );
 
         DatabaseModule.setDbUrl(configuration.getDatabaseUrl());
         final TemplateHealthcheck healthCheck =
                 new TemplateHealthcheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
-        environment.jersey().register(resource);
-        //environment.jersey().register(new DevelopmentResource());
+//        environment.jersey().register(resource);
         environment.jersey().register(new LockResource());
         environment.jersey().register(new MenuResource());
         environment.jersey().register(new LoginResource());

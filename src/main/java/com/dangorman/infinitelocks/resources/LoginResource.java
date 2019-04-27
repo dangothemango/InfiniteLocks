@@ -32,7 +32,7 @@ public class LoginResource {
         String correctPass;
         Response.ResponseBuilder rb;
         try {
-            correctPass = (String) DatabaseModule.getDbConnection().rows(
+            correctPass = (String) DatabaseModule.rows(
                     String.format("Select username,password from users where username = '%s' limit 1",username)
             ).get(0).get("password");
             if (password.equals(correctPass)) {
@@ -40,7 +40,7 @@ public class LoginResource {
                 String sessionId = UUID.randomUUID().toString();
                 Date expiry = new Date();
                 expiry = Utilities.addDate(expiry, Calendar.DATE, 1);
-                DatabaseModule.getDbConnection().execute(
+                DatabaseModule.execute(
                         String.format("insert into sessions values ('%s', '%s','%tD')", sessionId, username, expiry)
                 );
 

@@ -21,7 +21,7 @@ public class User {
         this.username = username;
         GroovyRowResult userRow;
         try {
-            userRow = DatabaseModule.getDbConnection().rows(
+            userRow = DatabaseModule.rows(
                     String.format("Select * from users where username = '%s' limit 1",username)
             ).get(0);
             this.fromRow(userRow);
@@ -43,8 +43,8 @@ public class User {
     public List<String> getAvailableLocks(){
         List<GroovyRowResult> puzzles;
         try {
-            puzzles = DatabaseModule.getDbConnection().rows("Select distinct name from locks");
-        } catch (SQLException e) {
+            puzzles = DatabaseModule.rows("Select distinct name from locks");
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new HTTPException(500);
         }
