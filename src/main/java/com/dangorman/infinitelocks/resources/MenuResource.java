@@ -2,6 +2,7 @@ package com.dangorman.infinitelocks.resources;
 
 import com.dangorman.infinitelocks.api.Constants;
 import com.dangorman.infinitelocks.core.User;
+import com.dangorman.infinitelocks.core.Utilities;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -18,9 +19,10 @@ public class MenuResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getMenu(@CookieParam(Constants.USER_COOKIE) String username, @CookieParam(Constants.SESSION_COOKIE) String sessionId){
-        System.out.println(username);
-        System.out.println(sessionId);
-
+        String userLoggedIn = Utilities.checkLoginStatus(username,sessionId);
+        if (userLoggedIn != null) {
+            return userLoggedIn;
+        }
         List<String> locks = new User(username).getAvailableLocks();
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Menu.html");

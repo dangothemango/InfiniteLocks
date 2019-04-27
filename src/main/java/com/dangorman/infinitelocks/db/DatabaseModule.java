@@ -27,7 +27,7 @@ public final class DatabaseModule {
 
             System.out.println("CONNECTION STRING:" + herokuUrl);
             dbConnection = Sql.newInstance(connectionString, username, password,"org.postgresql.Driver");
-            System.out.println(DatabaseModule.getDbConnection() == null ? "itsnull": "its not");
+            System.out.println(DatabaseModule.getDbConnection() == null ? "Could not connect to database": "successfully connected to database");
             return dbConnection;
         } catch (Exception e) {
             System.out.println(e.getClass().getName());
