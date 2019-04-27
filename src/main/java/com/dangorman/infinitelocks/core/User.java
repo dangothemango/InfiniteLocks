@@ -22,7 +22,7 @@ public class User {
         GroovyRowResult userRow;
         try {
             userRow = DatabaseModule.getDbConnection().rows(
-                    String.format("Select * from locks where username = '%s' limit 1",username)
+                    String.format("Select * from users where username = '%s' limit 1",username)
             ).get(0);
             this.fromRow(userRow);
         } catch (SQLException e) {
