@@ -9,6 +9,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -43,7 +44,7 @@ public class LoginResource {
                         String.format("insert into sessions values ('%s', '%s','%tD')", sessionId, username, expiry)
                 );
 
-                rb = Response.ok("Successful login");
+                rb = Response.seeOther(new URI("/menu"));
                 rb.cookie(new NewCookie("username", username),
                         new NewCookie("sessionId", sessionId));
 

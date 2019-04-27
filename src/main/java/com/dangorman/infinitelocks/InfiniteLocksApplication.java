@@ -9,7 +9,6 @@ import com.dangorman.infinitelocks.resources.MenuResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import org.eclipse.jetty.server.session.SessionHandler;
 
 public class InfiniteLocksApplication extends Application<InfiniteLocksConfiguration> {
 
