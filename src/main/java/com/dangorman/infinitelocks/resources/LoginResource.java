@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-@Path("/")
+@Path("/login")
 public class LoginResource {
 
     @GET

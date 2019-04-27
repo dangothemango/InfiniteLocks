@@ -37,7 +37,6 @@ public class User {
         this.firstName = (String)userRow.get("first_name");
         this.lastName = (String)userRow.get("last_name");
         this.numPuzzlesSolved = (int)userRow.get("puzzles_solved");
-        System.out.println(userRow.get("hascompletedtutorial"));
         this.completedTutorial = (Boolean)userRow.get("hascompletedtutorial");
     }
 

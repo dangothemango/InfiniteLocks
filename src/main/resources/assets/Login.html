@@ -17,13 +17,13 @@
     $('#loginForm').submit(function(e){
         e.preventDefault();
 
-        var url = "/" + "?username=" + $("#username").val() + "&password=" + $("#password").val();
+        var url = "/login" + "?username=" + $("#username").val() + "&password=" + $("#password").val();
 
         $.ajax({
             url: url,
             type: "POST",
             success: function () {
-                    alert("Success")
+                location.reload()
             },
             error: function (data) {
                 alert(data.responseText)

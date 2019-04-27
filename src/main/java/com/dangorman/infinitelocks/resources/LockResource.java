@@ -1,6 +1,8 @@
 package com.dangorman.infinitelocks.resources;
 
+import com.dangorman.infinitelocks.api.Constants;
 import com.dangorman.infinitelocks.api.UnlockAttempt;
+import com.dangorman.infinitelocks.core.Utilities;
 import com.dangorman.infinitelocks.db.DatabaseModule;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -17,7 +19,12 @@ public class LockResource {
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String getLock(@QueryParam("lock") String lock) {
+    public String getLock(@CookieParam(Constants.USER_COOKIE) String username, @CookieParam(Constants.SESSION_COOKIE) String sessionId,
+                          @QueryParam("lock") String lock) {
+        String userLoggedIn = Utilities.checkLoginStatus(username,sessionId);
+        if (userLoggedIn != null) {
+            return userLoggedIn;
+        }
         String lockHtml;
         if (lock.contains(";")){
             throw new HTTPException(401);
