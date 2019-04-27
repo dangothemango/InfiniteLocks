@@ -16,10 +16,10 @@ public class Utilities {
     }
 
     public static String checkLoginStatus(String username, String sessionId){
-        if (username.equals("null") || sessionId.equals("null")){
+        if (username != null && sessionId != null){
             return null;
         }
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Login.html");
-            return template.render(new JtwigModel());
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Login.html");
+        return template.render(new JtwigModel());
     }
 }
