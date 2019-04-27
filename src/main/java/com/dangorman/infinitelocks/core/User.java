@@ -10,6 +10,36 @@ import java.util.List;
 
 public class User {
 
+    public String username;
+    public String firstName;
+    public String lastName;
+    public int numPuzzlesSolved;
+    public boolean completedTutorial;
+
+
+    public User(String username){
+        this.username = username;
+        GroovyRowResult userRow;
+        try {
+            userRow = DatabaseModule.getDbConnection().rows(
+                    String.format("Select * from locks where username = '%s' limit 1",username)
+            ).get(0);
+            this.fromRow(userRow);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new HTTPException(500);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void fromRow(GroovyRowResult userRow){
+        this.firstName = (String)userRow.get("first_name");
+        this.lastName = (String)userRow.get("last_name");
+        this.numPuzzlesSolved = (int)userRow.get("puzzles_solved");
+        System.out.println(userRow.get("hascompletedtutorial"));
+        this.completedTutorial = (Boolean)userRow.get("hascompletedtutorial");
+    }
 
     public List<String> getAvailableLocks(){
         List<GroovyRowResult> puzzles;
@@ -17,8 +47,7 @@ public class User {
             puzzles = DatabaseModule.getDbConnection().rows("Select distinct name from locks");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            //TODO make all 404s better --idea Secret locks
-            throw new HTTPException(404);
+            throw new HTTPException(500);
         }
         List<String> validPuzzles = new ArrayList<>();
         for (GroovyRowResult puzzle: puzzles) {
@@ -26,6 +55,10 @@ public class User {
         }
 
         return validPuzzles;
+    }
+
+    public Boolean hasCompletedTutorial() {
+        return this.completedTutorial;
     }
 
 }

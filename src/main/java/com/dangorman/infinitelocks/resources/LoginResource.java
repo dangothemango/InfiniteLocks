@@ -1,5 +1,6 @@
 package com.dangorman.infinitelocks.resources;
 
+import com.dangorman.infinitelocks.api.Constants;
 import com.dangorman.infinitelocks.core.Utilities;
 import com.dangorman.infinitelocks.db.DatabaseModule;
 import org.jtwig.JtwigModel;
@@ -9,7 +10,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -44,9 +44,9 @@ public class LoginResource {
                         String.format("insert into sessions values ('%s', '%s','%tD')", sessionId, username, expiry)
                 );
 
-                rb = Response.seeOther(new URI("/menu"));
-                rb.cookie(new NewCookie("username", username),
-                        new NewCookie("sessionId", sessionId));
+                rb = Response.ok("Successful login");
+                rb.cookie(new NewCookie(Constants.USER_COOKIE, username),
+                        new NewCookie(Constants.SESSION_COOKIE, sessionId));
 
                 return rb.build();
             }
