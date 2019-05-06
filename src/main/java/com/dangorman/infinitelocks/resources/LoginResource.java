@@ -36,6 +36,7 @@ public class LoginResource {
                     String.format("Select username,password from users where username = '%s' limit 1",username)
             ).get(0).get("password");
             if (password.equals(correctPass)) {
+                Utilities.deleteExpiredSessions(username);
                 System.out.println("Password correct, logging in: "+username);
                 String sessionId = UUID.randomUUID().toString();
                 Date expiry = new Date();

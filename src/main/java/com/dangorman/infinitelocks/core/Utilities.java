@@ -37,4 +37,12 @@ public class Utilities {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Login.html");
         return template.render(new JtwigModel());
     }
+
+    public static void deleteExpiredSessions(String username){
+        try{
+            DatabaseModule.execute(String.format("delete from sessions where username = '%s' and expirydate < CURRENT_TIMESTAMP",username));
+        } catch (Exception e) {
+            System.err.println("Unable to remove expired sessions: " + e.getMessage());
+        }
+    }
 }
