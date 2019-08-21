@@ -17,6 +17,8 @@ import com.google.gson.JsonObject;
 @Path("/lock")
 public class LockResource {
 
+    private static String solvedInsertSql = "insert into solved_puzzles values ('%1$s', '%2$s') on conflict do nothing";
+
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getLock(@CookieParam(Constants.USER_COOKIE) String username, @CookieParam(Constants.SESSION_COOKIE) String sessionId,
@@ -47,7 +49,7 @@ public class LockResource {
     @Path("/unlock")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String unlock(UnlockAttempt unlockAttempt){
+    public String unlock(UnlockAttempt unlockAttempt, @CookieParam(Constants.USER_COOKIE) String username){
         if (unlockAttempt.getLock().contains(";")){
             throw new HTTPException(401);
         }
