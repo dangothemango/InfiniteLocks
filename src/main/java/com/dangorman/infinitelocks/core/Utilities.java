@@ -12,6 +12,9 @@ import java.util.Date;
 
 public class Utilities {
 
+    private static final String GET_SESSIONS_SQL = "select * from sessions where sessionid = ? and username = ?";
+    private static final String EXPIRE_SESSIONS_SQL = "delete from sessions where username = ? and expirydate < CURRENT_TIMESTAMP";
+
     public static Date addDate(Date d, int unit, int amount){
         Calendar c = Calendar.getInstance();
         c.setTime(d);
@@ -23,7 +26,7 @@ public class Utilities {
         if (username != null && sessionId != null){
             try {
                 GroovyRowResult session = DatabaseModule
-                        .rows("select * from sessions where sessionid = ? and username = ?", sessionId, username)
+                        .rows(GET_SESSIONS_SQL, sessionId, username)
                         .get(0);
                 Date expiryDate = (Date)session.get("expirydate");
 
@@ -54,7 +57,7 @@ public class Utilities {
 
     public static void deleteExpiredSessions(String username){
         try{
-            DatabaseModule.execute("delete from sessions where username = ? and expirydate < CURRENT_TIMESTAMP",username);
+            DatabaseModule.execute(EXPIRE_SESSIONS_SQL,username);
         } catch (Exception e) {
             System.err.println("Unable to remove expired sessions: " + e.getMessage());
         }

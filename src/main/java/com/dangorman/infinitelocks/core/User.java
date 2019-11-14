@@ -11,6 +11,8 @@ import java.util.List;
 
 public class User {
 
+    private static final String GET_USERS_SQL = "Select * from users where username = ? limit 1";
+    private static final String GET_LOCKS_SQL = "Select distinct name from locks";
     public String username;
     public String firstName;
     public String lastName;
@@ -21,7 +23,7 @@ public class User {
     public User(String username){
         try {
             GroovyRowResult userRow;
-            userRow = DatabaseModule.rows("Select * from users where username = ? limit 1", username).get(0);
+            userRow = DatabaseModule.rows(GET_USERS_SQL, username).get(0);
             this.fromRow(userRow);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -42,7 +44,7 @@ public class User {
     public List<String> getAvailableLocks(){
         List<GroovyRowResult> puzzles;
         try {
-            puzzles = DatabaseModule.rows("Select distinct name from locks");
+            puzzles = DatabaseModule.rows(GET_LOCKS_SQL);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new HTTPException(500);

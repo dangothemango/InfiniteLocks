@@ -10,14 +10,17 @@ import org.jtwig.JtwigTemplate;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.xml.ws.http.HTTPException;
-import java.sql.SQLException;
+
 import com.google.gson.JsonObject;
 
 
 @Path("/lock")
 public class LockResource {
 
-    private static String solvedInsertSql = "insert into solved_puzzles values ('%1$s', '%2$s') on conflict do nothing";
+    private static final String GET_LOCK_SOLUTIONS = "Select solutions from locks where name = ? limit 1";
+    private static final String GET_LOCK_SQL = "Select puzzle_html from locks where name = ? limit 1";
+    private static final String SOLVED_INSERT_SQL = "insert into solved_puzzles values ('%1$s', '%2$s') on conflict do nothing";
+
 
     @GET
     @Produces(MediaType.TEXT_HTML)
@@ -32,7 +35,7 @@ public class LockResource {
             throw new HTTPException(401);
         }
         try {
-            lockHtml = (String)DatabaseModule.rows("Select puzzle_html from locks where name = ? limit 1",lock)
+            lockHtml = (String)DatabaseModule.rows(GET_LOCK_SQL,lock)
                     .get(0).get("puzzle_html");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -57,7 +60,7 @@ public class LockResource {
         System.out.println(unlockAttempt.getLock()+':'+unlockAttempt.getKey());
         try{
             allSolutions = (String)
-                    DatabaseModule.rows("Select solutions from locks where name = ? limit 1",unlockAttempt.getLock())
+                    DatabaseModule.rows(GET_LOCK_SOLUTIONS,unlockAttempt.getLock())
                             .get(0).get("solutions");
             System.out.println(allSolutions);
             String[] solutionsList = allSolutions.split(",");
