@@ -28,7 +28,9 @@ public class Utilities {
 
                 if (expiryDate.after(new Date())){
                     System.out.println("Session validated");
-                    extendSession(username,sessionId);
+                    if (extendSession(username,sessionId)) {
+                        System.out.println("Session extended");
+                    }
                     return null;
                 }
                 System.out.println("User session expired");
@@ -40,11 +42,11 @@ public class Utilities {
         return template.render(new JtwigModel());
     }
 
-    public static void extendSession(String username, String sessionId) throws SQLException {
+    public static boolean extendSession(String username, String sessionId) throws SQLException {
         Date expiry = new Date();
         expiry = Utilities.addDate(expiry, Calendar.DATE, 1);
-        DatabaseModule.execute(
-                String.format("insert into sessions values (?,?,'%1$tD')" +
+        return DatabaseModule.execute(
+                String.format("insert into sessions values (?,?,'%1$tD') " +
                         "on conflict do update set expirydate = '%1$td", expiry),
                 sessionId,
                 username);

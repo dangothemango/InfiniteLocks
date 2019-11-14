@@ -47,6 +47,7 @@ public class LoginResource {
                 return rb.build();
             }
         } catch (Exception e) {
+            System.err.println(e.getMessage());
             System.out.println(String.format("User: %s not found", username));
         }
         rb = Response.status(Response.Status.FORBIDDEN);
