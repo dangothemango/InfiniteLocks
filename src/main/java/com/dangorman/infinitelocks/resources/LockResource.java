@@ -32,9 +32,8 @@ public class LockResource {
             throw new HTTPException(401);
         }
         try {
-            lockHtml = (String)DatabaseModule.rows(
-                        String.format("Select puzzle_html from locks where name = '%s' limit 1",lock)
-                    ).get(0).get("puzzle_html");
+            lockHtml = (String)DatabaseModule.rows("Select puzzle_html from locks where name = ? limit 1",lock)
+                    .get(0).get("puzzle_html");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             //TODO make all 404s better --idea Secret locks
@@ -57,9 +56,9 @@ public class LockResource {
         String result = "failure";
         System.out.println(unlockAttempt.getLock()+':'+unlockAttempt.getKey());
         try{
-            allSolutions = (String)DatabaseModule.rows(
-                    String.format("Select solutions from locks where name = '%s' limit 1",unlockAttempt.getLock())
-                        ).get(0).get("solutions");
+            allSolutions = (String)
+                    DatabaseModule.rows("Select solutions from locks where name = ? limit 1",unlockAttempt.getLock())
+                            .get(0).get("solutions");
             System.out.println(allSolutions);
             String[] solutionsList = allSolutions.split(",");
             for (String s: solutionsList) {

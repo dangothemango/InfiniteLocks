@@ -3,6 +3,7 @@ package com.dangorman.infinitelocks.core;
 import com.dangorman.infinitelocks.db.DatabaseModule;
 import groovy.sql.GroovyRowResult;
 
+import javax.xml.crypto.Data;
 import javax.xml.ws.http.HTTPException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,12 +19,9 @@ public class User {
 
 
     public User(String username){
-        this.username = username;
-        GroovyRowResult userRow;
         try {
-            userRow = DatabaseModule.rows(
-                    String.format("Select * from users where username = '%s' limit 1",username)
-            ).get(0);
+            GroovyRowResult userRow;
+            userRow = DatabaseModule.rows("Select * from users where username = ? limit 1", username).get(0);
             this.fromRow(userRow);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -34,6 +32,7 @@ public class User {
     }
 
     private void fromRow(GroovyRowResult userRow){
+        this.username = (String)userRow.get("username");
         this.firstName = (String)userRow.get("first_name");
         this.lastName = (String)userRow.get("last_name");
         this.numPuzzlesSolved = (int)userRow.get("puzzles_solved");

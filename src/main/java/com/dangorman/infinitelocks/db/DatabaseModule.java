@@ -5,6 +5,7 @@ import groovy.sql.Sql;
 import groovy.util.logging.Slf4j;
 
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
@@ -36,17 +37,19 @@ public final class DatabaseModule {
         return null;
     }
 
-    public static List<GroovyRowResult> rows(String query) throws Exception{
-        if (query.contains(";")){
-            throw new Exception("Found sql injection attempt, erring");
-        }
+    public static List<GroovyRowResult> rows(String query) throws SQLException {
         return dbConnection.rows(query);
     }
 
-    public static boolean execute(String query) throws Exception{
-        if (query.contains(";")){
-            throw new Exception("Found sql injection attempt, erring");
-        }
+    public static List<GroovyRowResult> rows(String query, Object... params) throws SQLException {
+        return dbConnection.rows(query, params);
+    }
+
+    public static boolean execute(String query) throws SQLException {
         return dbConnection.execute(query);
+    }
+
+    public static boolean execute(String query, Object... params) throws SQLException {
+        return dbConnection.execute(query, params);
     }
 }

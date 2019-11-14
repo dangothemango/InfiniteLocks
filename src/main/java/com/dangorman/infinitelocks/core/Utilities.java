@@ -20,9 +20,9 @@ public class Utilities {
     public static String checkLoginStatus(String username, String sessionId){
         if (username != null && sessionId != null){
             try {
-                GroovyRowResult session = DatabaseModule.rows(
-                        String.format("select * from sessions where sessionid = '%s' and username = '%s'", sessionId, username)
-                ).get(0);
+                GroovyRowResult session = DatabaseModule
+                        .rows("select * from sessions where sessionid = ? and username = ?", sessionId, username)
+                        .get(0);
                 Date expiryDate = (Date)session.get("expirydate");
 
                 if (expiryDate.after(new Date())){
@@ -40,7 +40,7 @@ public class Utilities {
 
     public static void deleteExpiredSessions(String username){
         try{
-            DatabaseModule.execute(String.format("delete from sessions where username = '%s' and expirydate < CURRENT_TIMESTAMP",username));
+            DatabaseModule.execute("delete from sessions where username = ? and expirydate < CURRENT_TIMESTAMP",username);
         } catch (Exception e) {
             System.err.println("Unable to remove expired sessions: " + e.getMessage());
         }
