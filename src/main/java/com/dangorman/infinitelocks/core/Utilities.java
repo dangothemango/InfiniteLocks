@@ -47,7 +47,7 @@ public class Utilities {
         expiry = Utilities.addDate(expiry, Calendar.DATE, 1);
         return DatabaseModule.execute(
                 String.format("insert into sessions values (?,?,'%1$tD') " +
-                        "on conflict (sessionid) do update set expirydate = '%1$td'", expiry),
+                        "on conflict (sessionid) do update set expirydate = '%1$tD'", expiry),
                 sessionId,
                 username);
     }
