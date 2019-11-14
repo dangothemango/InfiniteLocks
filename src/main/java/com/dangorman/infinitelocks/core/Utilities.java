@@ -5,6 +5,7 @@ import groovy.sql.GroovyRowResult;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,6 +28,7 @@ public class Utilities {
 
                 if (expiryDate.after(new Date())){
                     System.out.println("Session validated");
+                    extendSession(username,sessionId);
                     return null;
                 }
                 System.out.println("User session expired");
@@ -36,6 +38,16 @@ public class Utilities {
         }
         JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Login.html");
         return template.render(new JtwigModel());
+    }
+
+    public static void extendSession(String username, String sessionId) throws SQLException {
+        Date expiry = new Date();
+        expiry = Utilities.addDate(expiry, Calendar.DATE, 1);
+        DatabaseModule.execute(
+                String.format("insert into sessions values (?,?,'%1$tD')" +
+                        "on conflict do update set expirydate = '%1$td", expiry),
+                sessionId,
+                username);
     }
 
     public static void deleteExpiredSessions(String username){

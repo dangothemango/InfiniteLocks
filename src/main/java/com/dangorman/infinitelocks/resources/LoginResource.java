@@ -39,12 +39,7 @@ public class LoginResource {
                 Utilities.deleteExpiredSessions(username);
                 System.out.println("Password correct, logging in: "+username);
                 String sessionId = UUID.randomUUID().toString();
-                Date expiry = new Date();
-                expiry = Utilities.addDate(expiry, Calendar.DATE, 1);
-                DatabaseModule.execute(
-                        String.format("insert into sessions values (?,?,'%tD')", expiry),
-                        sessionId,
-                        username);
+                Utilities.extendSession(username, sessionId);
                 rb = Response.ok("Successful login");
                 rb.cookie(new NewCookie(Constants.USER_COOKIE, username),
                         new NewCookie(Constants.SESSION_COOKIE, sessionId));
