@@ -7,6 +7,7 @@ import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -41,9 +42,8 @@ public class LoginResource {
                 String sessionId = UUID.randomUUID().toString();
                 Utilities.extendSession(username, sessionId);
                 rb = Response.ok("Successful login");
-                rb.cookie(new NewCookie(Constants.USER_COOKIE, username),
-                        new NewCookie(Constants.SESSION_COOKIE, sessionId));
-
+                rb.cookie(Utilities.createSecureCookie(Constants.USER_COOKIE, username),
+                        Utilities.createSecureCookie(Constants.SESSION_COOKIE, sessionId));
                 return rb.build();
             }
         } catch (Exception e) {

@@ -5,6 +5,7 @@ import groovy.sql.GroovyRowResult;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import javax.ws.rs.core.NewCookie;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
@@ -28,9 +29,8 @@ public class Utilities {
 
                 if (expiryDate.after(new Date())){
                     System.out.println("Session validated");
-                    if (extendSession(username,sessionId)) {
-                        System.out.println("Session extended");
-                    }
+                    extendSession(username,sessionId);
+                    System.out.println("Session extended");
                     return null;
                 }
                 System.out.println("User session expired");
@@ -44,7 +44,7 @@ public class Utilities {
 
     public static boolean extendSession(String username, String sessionId) throws SQLException {
         Date expiry = new Date();
-        expiry = Utilities.addDate(expiry, Calendar.DATE, 1);
+        expiry = Utilities.addDate(expiry, Calendar.DATE, 2);
         return DatabaseModule.execute(
                 String.format("insert into sessions values (?,?,'%1$tD') " +
                         "on conflict (sessionid) do update set expirydate = '%1$tD'", expiry),
@@ -58,5 +58,16 @@ public class Utilities {
         } catch (Exception e) {
             System.err.println("Unable to remove expired sessions: " + e.getMessage());
         }
+    }
+
+    public static NewCookie createSecureCookie(String identifier, String value) {
+        return new NewCookie(identifier,
+                value,
+                null,
+                null,
+                null,
+                -1,
+                true,
+                true);
     }
 }
