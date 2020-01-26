@@ -18,10 +18,14 @@ public class LoginResource {
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String getLogin(){
-        //TODO: check if user already logged in
-
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Login.html");
+    public String getLogin(@CookieParam(Constants.USER_COOKIE) String username, @CookieParam(Constants.SESSION_COOKIE) String sessionId){
+        String userLoggedIn = Utilities.checkLoginStatus(username,sessionId);
+        JtwigTemplate template;
+        if (userLoggedIn == null) {
+            template = JtwigTemplate.classpathTemplate("assets/menu.html");
+        } else {
+            template = JtwigTemplate.classpathTemplate("assets/Login.html");
+        }
 
         return template.render(new JtwigModel());
     }

@@ -31,9 +31,6 @@ public class LockResource {
             return userLoggedIn;
         }
         String lockHtml;
-        if (lock.contains(";")){
-            throw new HTTPException(401);
-        }
         try {
             lockHtml = (String)DatabaseModule.rows(GET_LOCK_SQL,lock)
                     .get(0).get("puzzle_html");
