@@ -23,13 +23,16 @@ public class MenuResource {
         if (userLoggedIn != null) {
             return userLoggedIn;
         }
+        return renderMenu(username);
+    }
+
+    public static String renderMenu(String username) {
         List<String> locks = new User(username).getAvailableLocks();
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Menu.html");
 
         return template.render(new JtwigModel()
-                .with("availableLocks",locks)
-        );
+                .with("availableLocks",locks));
     }
 
 }

@@ -20,14 +20,15 @@ public class LoginResource {
     @Produces(MediaType.TEXT_HTML)
     public String getLogin(@CookieParam(Constants.USER_COOKIE) String username, @CookieParam(Constants.SESSION_COOKIE) String sessionId){
         String userLoggedIn = Utilities.checkLoginStatus(username,sessionId);
-        JtwigTemplate template;
+
         if (userLoggedIn == null) {
-            template = JtwigTemplate.classpathTemplate("assets/Menu.html");
+            return MenuResource.renderMenu(username);
         } else {
+            JtwigTemplate template;
             template = JtwigTemplate.classpathTemplate("assets/Login.html");
+            return template.render(new JtwigModel());
         }
 
-        return template.render(new JtwigModel());
     }
 
     @POST
