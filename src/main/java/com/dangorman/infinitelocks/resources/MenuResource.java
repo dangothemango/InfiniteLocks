@@ -19,14 +19,14 @@ public class MenuResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getMenu(@CookieParam(Constants.USER_COOKIE) String username, @CookieParam(Constants.SESSION_COOKIE) String sessionId){
-        String userLoggedIn = Utilities.checkLoginStatus(username,sessionId);
-        if (userLoggedIn != null) {
-            return userLoggedIn;
+        boolean isSessionActive = Utilities.isSessionActive(username,sessionId);
+        if (!isSessionActive) {
+            return Utilities.getRedirect("/login");
         }
         return renderMenu(username);
     }
 
-    public static String renderMenu(String username) {
+    private static String renderMenu(String username) {
         List<String> locks = new User(username).getAvailableLocks();
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Menu.html");

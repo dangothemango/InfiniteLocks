@@ -22,7 +22,7 @@ public class Utilities {
         return c.getTime();
     }
 
-    public static String checkLoginStatus(String username, String sessionId){
+    public static boolean isSessionActive(String username, String sessionId){
         if (username != null && sessionId != null){
             try {
                 GroovyRowResult session = DatabaseModule
@@ -34,15 +34,14 @@ public class Utilities {
                     System.out.println("Session validated");
                     extendSession(username,sessionId);
                     System.out.println("Session extended");
-                    return null;
+                    return true;
                 }
                 System.out.println("User session expired");
             } catch (Exception e) {
                 System.err.println("Unable verify user session: " + e.getMessage());
             }
         }
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/Login.html");
-        return template.render(new JtwigModel());
+        return false;
     }
 
     public static boolean extendSession(String username, String sessionId) throws SQLException {
@@ -72,5 +71,11 @@ public class Utilities {
                 -1,
                 true,
                 true);
+    }
+
+    public static String getRedirect(String dest){
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("assets/redirect.html");
+
+        return template.render(new JtwigModel().with("url",dest));
     }
 }

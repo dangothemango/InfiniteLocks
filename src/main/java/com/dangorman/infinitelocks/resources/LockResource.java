@@ -26,9 +26,9 @@ public class LockResource {
     @Produces(MediaType.TEXT_HTML)
     public String getLock(@CookieParam(Constants.USER_COOKIE) String username, @CookieParam(Constants.SESSION_COOKIE) String sessionId,
                           @QueryParam("lock") String lock) {
-        String userLoggedIn = Utilities.checkLoginStatus(username,sessionId);
-        if (userLoggedIn != null) {
-            return userLoggedIn;
+        boolean isSessionActive = Utilities.isSessionActive(username,sessionId);
+        if (!isSessionActive) {
+            return Utilities.getRedirect("/login");
         }
         String lockHtml;
         try {

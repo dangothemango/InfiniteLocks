@@ -19,10 +19,10 @@ public class LoginResource {
     @GET
     @Produces(MediaType.TEXT_HTML)
     public String getLogin(@CookieParam(Constants.USER_COOKIE) String username, @CookieParam(Constants.SESSION_COOKIE) String sessionId){
-        String userLoggedIn = Utilities.checkLoginStatus(username,sessionId);
+        boolean sessionActive = Utilities.isSessionActive(username,sessionId);
 
-        if (userLoggedIn == null) {
-            return MenuResource.renderMenu(username);
+        if (sessionActive) {
+            return Utilities.getRedirect("/");
         } else {
             JtwigTemplate template;
             template = JtwigTemplate.classpathTemplate("assets/Login.html");
