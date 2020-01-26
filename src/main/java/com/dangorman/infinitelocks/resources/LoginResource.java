@@ -22,7 +22,7 @@ public class LoginResource {
         String userLoggedIn = Utilities.checkLoginStatus(username,sessionId);
         JtwigTemplate template;
         if (userLoggedIn == null) {
-            template = JtwigTemplate.classpathTemplate("assets/menu.html");
+            template = JtwigTemplate.classpathTemplate("assets/Menu.html");
         } else {
             template = JtwigTemplate.classpathTemplate("assets/Login.html");
         }
