@@ -16,7 +16,7 @@
     $('#unlockForm').submit(function(e){
         e.preventDefault();
 
-        var json = {};
+        let json = {};
 
         json["lock"] = "{{ lockName }}";
         json["key"] = $("#keyInput").val();
